@@ -1,15 +1,16 @@
-package com.concurent.learn.InterviewQuestions;
+package com.concurent.learn.InterviewQuestions.mutitask;
 
-import java.util.concurrent.locks.LockSupport;
+
 
 /**
  * describe:
- *来自于阿里：
+ * 来自阿里：
  * 「请寻求最优解，不要只是粗暴wait（）」
+ *  有一个总任务A，分解为子任务A1 A2 A3 ...，任何一个子任务失败后要快速取消所有任务，请写程序模拟。
  *
- * 有一个总任务A，分解为子任务A1 A2 A3 ...，任何一个子任务失败后要快速取消所有任务，请写程序模拟。
- *
+ * 思路：
  * 1、主线程 结束，守护线程自动结束
+ * 2、主线程通过循环 判断 4个子任务的线程的 isInterrupted()，判断是否有子任务执行失败
  *
  * @author huyi
  * @date 2020/11/17
@@ -91,6 +92,9 @@ public class MutiTaskDemo {
         public void run() {
             int err = (int) (Math.random()*taskNum);
             for (int i = 0; i <= taskNum; i++) {
+                if (Thread.currentThread().isInterrupted()){
+                    return;
+                }
                 try {
                     // 为了便于观察，每个任务执行一次休息300毫秒
                     Thread.sleep(300L);

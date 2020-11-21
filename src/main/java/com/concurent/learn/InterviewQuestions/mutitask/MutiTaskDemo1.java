@@ -1,8 +1,13 @@
-package com.concurent.learn.InterviewQuestions;
+package com.concurent.learn.InterviewQuestions.mutitask;
 
 /**
  * describe:
+ * 来自阿里：
+ * 「请寻求最优解，不要只是粗暴wait（）」
+ *  有一个总任务A，分解为子任务A1 A2 A3 ...，任何一个子任务失败后要快速取消所有任务，请写程序模拟。
  *
+ * 思路
+ *  1.所用任务 通过一个 volatile的 flag 来线程间通信，是否有其他子任务执行失败,执行失败则结束线程
  * @author huyi
  * @date 2020/11/18
  */
